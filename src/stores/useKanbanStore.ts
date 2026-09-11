@@ -2,25 +2,24 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export interface Task {
-  id: string
+  id: number
   title: string
-  priority: 'Urgente' | 'Media' | 'Baja'
+  description?: string
+  priority: 'Baja' | 'Media' | 'Urgente'
   column: 'todo' | 'in-progress' | 'done'
 }
 
 export const useKanbanStore = defineStore('kanban', () => {
   const tasks = ref<Task[]>([
-    { id: '1', title: 'Diseñar la interfaz de autenticación', priority: 'Urgente', column: 'todo' },
-    { id: '2', title: 'Configurar rutas y Tailwind CSS', priority: 'Media', column: 'in-progress' },
-    { id: '3', title: 'Inicializar proyecto con Vite y Vue 3', priority: 'Baja', column: 'done' }
+    { id: 1, title: 'Diseñar la interfaz de autenticación', description: 'Crear vistas de login y registro', priority: 'Urgente', column: 'todo' },
+    { id: 2, title: 'Configurar rutas y Tailwind CSS', description: 'Instalar estilos y definir vistas', priority: 'Media', column: 'in-progress' },
+    { id: 3, title: 'Inicializar proyecto con Vite y Vue 3', description: 'Configuración inicial del repositorio', priority: 'Baja', column: 'done' }
   ])
 
-  function addTask(title: string, priority: Task['priority']) {
+  function addTask(taskData: Omit<Task, 'id'>) {
     tasks.value.push({
-      id: Date.now().toString(),
-      title,
-      priority,
-      column: 'todo'
+      id: Date.now(),
+      ...taskData
     })
   }
 

@@ -1,13 +1,17 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { useKanbanStore } from '../stores/useKanbanStore'
-import { computed } from 'vue'
+import TaskModal from '../components/TaskModal.vue'
 
 const kanbanStore = useKanbanStore()
+const isModalOpen = ref(false)
 
+// Filtrar tareas por columna de forma dinámica
 const todoTasks = computed(() => kanbanStore.tasks.filter(t => t.column === 'todo'))
 const inProgressTasks = computed(() => kanbanStore.tasks.filter(t => t.column === 'in-progress'))
 const doneTasks = computed(() => kanbanStore.tasks.filter(t => t.column === 'done'))
 
+// Función de color según la prioridad
 function getPriorityClass(priority: string) {
   switch (priority) {
     case 'Urgente': return 'bg-red-900 text-red-300'
@@ -15,6 +19,10 @@ function getPriorityClass(priority: string) {
     case 'Baja': return 'bg-green-900 text-green-300'
     default: return 'bg-gray-700 text-gray-300'
   }
+}
+
+const handleAddTask = (taskData: any) => {
+  kanbanStore.addTask(taskData)
 }
 </script>
 
@@ -41,7 +49,7 @@ function getPriorityClass(priority: string) {
       <header class="h-16 bg-gray-800 border-b border-gray-700 flex items-center justify-between px-6">
         <h2 class="text-lg font-semibold">Tablero General del Proyecto</h2>
         <button 
-          @click="kanbanStore.addTask('Nueva tarea de prueba', 'Media')"
+          @click="isModalOpen = true"
           class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded text-sm font-medium transition cursor-pointer"
         >
           + Nueva Tarea
@@ -64,7 +72,8 @@ function getPriorityClass(priority: string) {
               <span :class="['text-xs px-2 py-0.5 rounded font-medium', getPriorityClass(task.priority)]">
                 {{ task.priority }}
               </span>
-              <p class="mt-2 text-sm">{{ task.title }}</p>
+              <p class="mt-2 text-sm font-medium">{{ task.title }}</p>
+              <p v-if="task.description" class="mt-1 text-xs text-gray-400">{{ task.description }}</p>
             </div>
           </div>
         </div>
@@ -83,7 +92,8 @@ function getPriorityClass(priority: string) {
               <span :class="['text-xs px-2 py-0.5 rounded font-medium', getPriorityClass(task.priority)]">
                 {{ task.priority }}
               </span>
-              <p class="mt-2 text-sm">{{ task.title }}</p>
+              <p class="mt-2 text-sm font-medium">{{ task.title }}</p>
+              <p v-if="task.description" class="mt-1 text-xs text-gray-400">{{ task.description }}</p>
             </div>
           </div>
         </div>
@@ -102,12 +112,15 @@ function getPriorityClass(priority: string) {
               <span :class="['text-xs px-2 py-0.5 rounded font-medium', getPriorityClass(task.priority)]">
                 {{ task.priority }}
               </span>
-              <p class="mt-2 text-sm">{{ task.title }}</p>
+              <p class="mt-2 text-sm font-medium">{{ task.title }}</p>
+              <p v-if="task.description" class="mt-1 text-xs text-gray-400">{{ task.description }}</p>
             </div>
           </div>
         </div>
 
       </div>
     </main>
+
+    <TaskModal :is-open="isModalOpen" @close="isModalOpen = false" @add="handleAddTask" />
   </div>
 </template>
