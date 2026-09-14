@@ -23,5 +23,16 @@ export const useKanbanStore = defineStore('kanban', () => {
     })
   }
 
-  return { tasks, addTask }
+  function moveTask(taskId: number, newColumn: 'todo' | 'in-progress' | 'done') {
+    const task = tasks.value.find(t => t.id === taskId)
+    if (task) {
+      task.column = newColumn
+    }
+  }
+
+  function deleteTask(taskId: number) {
+    tasks.value = tasks.value.filter(t => t.id !== taskId)
+  }
+
+  return { tasks, addTask, moveTask, deleteTask }
 })
