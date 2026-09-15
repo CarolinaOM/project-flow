@@ -54,5 +54,5 @@ export const useKanbanStore = defineStore('kanban', () => {
     saveToStorage()
   }
 
-  return { tasks, addTask, moveTask, deleteTask }
+  return { tasks, addTask, moveTask, deleteTask, resetTasks }
 })
