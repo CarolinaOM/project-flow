@@ -44,14 +44,30 @@ const handleAddTask = (taskData: any) => {
     </aside>
 
     <main class="flex-1 flex flex-col overflow-hidden">
+      <!-- Barra superior con el contador y el botón de restaurar -->
       <header class="h-16 bg-gray-800 border-b border-gray-700 flex items-center justify-between px-6">
-        <h2 class="text-lg font-semibold">Tablero General del Proyecto</h2>
-        <button 
-          @click="isModalOpen = true"
-          class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded text-sm font-medium transition cursor-pointer"
-        >
-          + Nueva Tarea
-        </button>
+        <div class="flex items-center gap-4">
+          <h2 class="text-lg font-semibold">Tablero General del Proyecto</h2>
+          <span class="text-xs bg-gray-700 text-emerald-400 px-2.5 py-1 rounded-full font-medium">
+            Total: {{ kanbanStore.tasks.length }} tareas
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button 
+            @click="kanbanStore.resetTasks()"
+            class="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-3 py-2 rounded font-medium transition cursor-pointer"
+            title="Volver a las tareas de ejemplo"
+          >
+            Restaurar tablero
+          </button>
+          <button 
+            @click="isModalOpen = true"
+            class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded text-sm font-medium transition cursor-pointer"
+          >
+            + Nueva Tarea
+          </button>
+        </div>
       </header>
 
       <div class="flex-1 bg-gray-900 p-6 flex gap-6 overflow-x-auto">
@@ -84,7 +100,6 @@ const handleAddTask = (taskData: any) => {
               <p class="mt-2 text-sm font-medium">{{ task.title }}</p>
               <p v-if="task.description" class="mt-1 text-xs text-gray-400">{{ task.description }}</p>
 
-              <!-- Botones de movimiento -->
               <div class="mt-3 flex justify-end gap-1 border-t border-gray-700/50 pt-2">
                 <button 
                   @click="kanbanStore.moveTask(task.id, 'in-progress')"
@@ -125,7 +140,6 @@ const handleAddTask = (taskData: any) => {
               <p class="mt-2 text-sm font-medium">{{ task.title }}</p>
               <p v-if="task.description" class="mt-1 text-xs text-gray-400">{{ task.description }}</p>
 
-              <!-- Botones de movimiento -->
               <div class="mt-3 flex justify-between gap-1 border-t border-gray-700/50 pt-2">
                 <button 
                   @click="kanbanStore.moveTask(task.id, 'todo')"
@@ -172,7 +186,6 @@ const handleAddTask = (taskData: any) => {
               <p class="mt-2 text-sm font-medium">{{ task.title }}</p>
               <p v-if="task.description" class="mt-1 text-xs text-gray-400">{{ task.description }}</p>
 
-              <!-- Botones de movimiento -->
               <div class="mt-3 flex justify-end gap-1 border-t border-gray-700/50 pt-2">
                 <button 
                   @click="kanbanStore.moveTask(task.id, 'in-progress')"
