@@ -8,6 +8,8 @@
 
 * **Sitio Web:** **(Aquí puedes poner tu enlace de Netlify cuando lo subas, por ejemplo: `https://tu-proyecto.netlify.app`)*
 
+![Vista previa de la app](./src/assets/proyecto.png)
+
 ---
 
 ## 🎯 Sobre el Proyecto
