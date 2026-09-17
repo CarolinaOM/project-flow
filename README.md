@@ -6,7 +6,7 @@
 
 ## 🌐 Demo y Despliegue
 
-* **Sitio Web:** **(Aquí puedes poner tu enlace de Netlify cuando lo subas, por ejemplo: `https://tu-proyecto.netlify.app`)*
+* **Sitio Web:**: (`https://app-project-flow.netlify.app/`)
 
 ![Vista previa de la app](./src/assets/proyecto.png)
 
